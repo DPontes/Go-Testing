@@ -26,3 +26,21 @@ func TestSortMoreThan10K(t *testing.T) {
     t.Error( "Last element should be 10000" )
   }
 }
+
+func BenchmarkSort10K(b *testing.B) {
+  elements := sorting.GetElements(10000)
+
+  // The function to be benchmarked will be inside the for-loop
+  for i := 0; i <b.N; i++ {
+    Sort(elements)
+  }
+}
+
+func BenchmarkSort100K(b *testing.B) {
+  elements := sorting.GetElements(100000)
+
+  // The function to be benchmarked will be inside the for-loop
+  for i := 0; i <b.N; i++ {
+    Sort(elements)
+  }
+}
