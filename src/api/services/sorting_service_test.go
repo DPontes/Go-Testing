@@ -1,22 +1,12 @@
 package services
 
 import (
+  "api/utils/sorting"
   "testing"
 )
 
-// returns a splice of ints in descending order
-func getElements(n int) []int {
-  result := make([]int, n)
-  j := 0
-  for i := n - 1; i > 0; i-- {
-    result[j] = i
-    j++
-  }
-  return result
-}
-
 func TestSortOrderIncr(t *testing.T) {
-  elements := getElements(10)
+  elements := sorting.GetElements(10)
   Sort(elements)
   if elements[0] != 0 {
     t.Error( "First element should be 0" )
@@ -27,7 +17,7 @@ func TestSortOrderIncr(t *testing.T) {
 }
 
 func TestSortMoreThan10K(t *testing.T) {
-  elements := getElements(10001)
+  elements := sorting.GetElements(10001)
   Sort(elements)
   if elements[0] != 0 {
     t.Error( "First element should be 0" )
