@@ -4,14 +4,20 @@ import (
   "testing"
 )
 
-func TestBubbleSortOrderIncre(t *testing.T) {
-  // Init
-  elements := []int{9,7,5,3,1,2,4,6,8,0}
+// returns a splice of ints in descending order
+func getElements(n int) []int {
+  result := make([]int, n)
+  j := 0
+  for i := n - 1; i > 0; i-- {
+    result[j] = i
+    j++
+  }
+  return result
+}
 
-  // Execution
-  BubbleSort(elements)
-
-  // Validation
+func TestSortOrderIncr(t *testing.T) {
+  elements := getElements(10)
+  Sort(elements)
   if elements[0] != 0 {
     t.Error( "First element should be 0" )
   }
@@ -20,13 +26,13 @@ func TestBubbleSortOrderIncre(t *testing.T) {
   }
 }
 
-func TestSortOrderIncr(t *testing.T) {
-  elements := []int{9,7,5,3,1,2,4,6,8,0}
+func TestSortMoreThan10K(t *testing.T) {
+  elements := getElements(10001)
   Sort(elements)
   if elements[0] != 0 {
     t.Error( "First element should be 0" )
   }
-  if elements[len(elements) - 1] != 9 {
-    t.Error( "Last element should be 9" )
+  if elements[len(elements) - 1] != 10000 {
+    t.Error( "Last element should be 10000" )
   }
 }

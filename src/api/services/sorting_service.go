@@ -7,5 +7,9 @@ import (
 // By calling an external package (sorting), the corresponding
 // test is considered an "integration test"
 func Sort(elements []int) {
-  sorting.BubbleSort(elements)
+  if len(elements) <= 10000 {
+    sorting.BubbleSort(elements)
+    return
+  }
+  sorting.Sort(elements)
 }
