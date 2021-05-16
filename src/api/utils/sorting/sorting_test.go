@@ -31,6 +31,18 @@ func TestSortOrderIncr(t *testing.T) {
   }
 }
 
+// returns a splice of ints in descending order
+func getElements(n int) []int {
+  result := make([]int, n)
+  j := 0
+  for i := n - 1; i > 0; i-- {
+    result[j] = i
+    j++
+  }
+  return result
+}
+
+
 // functions that start with "Benchmark*" are considered
 // by the Go compiler as special "Benchmark" functions,
 // much like "Test*" functions are functions for testing
@@ -38,7 +50,7 @@ func TestSortOrderIncr(t *testing.T) {
 // To run: go test -test.bench=.
 //         go test -test.bench=BenchmarkBubbleSort
 func BenchmarkBubbleSort(b *testing.B) {
-  elements := []int{9,7,5,3,1,2,4,6,8,0}
+  elements := getElements(100000)
 
   // The function to be benchmarked will be inside the for-loop
   for i := 0; i <b.N; i++ {
@@ -47,7 +59,7 @@ func BenchmarkBubbleSort(b *testing.B) {
 }
 
 func BenchmarkSort(b *testing.B) {
-  elements := []int{9,7,5,3,1,2,4,6,8,0}
+  elements := getElements(100000)
 
   // The function to be benchmarked will be inside the for-loop
   for i := 0; i <b.N; i++ {
