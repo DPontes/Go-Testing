@@ -1,30 +1,31 @@
 package services
 
+// To install the "assert" library below, run:
+// `go get github.com/stretchr/testify/assert`
 import (
   "api/utils/sorting"
   "testing"
+  "github.com/stretchr/testify/assert"
 )
 
 func TestSortOrderIncr(t *testing.T) {
   elements := sorting.GetElements(10)
+
   Sort(elements)
-  if elements[0] != 0 {
-    t.Error( "First element should be 0" )
-  }
-  if elements[len(elements) - 1] != 9 {
-    t.Error( "Last element should be 9" )
-  }
+
+  assert.NotNil(t, elements)
+
+  assert.EqualValues(t, 0, elements[0], "First element should be 0")
+  assert.EqualValues(t, 9, elements[len(elements) - 1], "Last element should be 9")
 }
 
 func TestSortMoreThan10K(t *testing.T) {
   elements := sorting.GetElements(10001)
+
   Sort(elements)
-  if elements[0] != 0 {
-    t.Error( "First element should be 0" )
-  }
-  if elements[len(elements) - 1] != 10000 {
-    t.Error( "Last element should be 10000" )
-  }
+
+  assert.EqualValues(t, 0, elements[0], "First element should be 0")
+  assert.EqualValues(t, 10000, elements[len(elements) - 1], "Last element should be 10000")
 }
 
 func BenchmarkSort10K(b *testing.B) {
