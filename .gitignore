@@ -1,2 +1,5 @@
 main
 *.sw*
+pkg
+github.com
+gopkg.in
