@@ -3,3 +3,6 @@ main
 pkg
 github.com
 gopkg.in
+*golang.org
+bin
+
