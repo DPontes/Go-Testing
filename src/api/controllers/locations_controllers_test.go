@@ -3,7 +3,9 @@ package controllers
 import(
   "testing"
   "os"
+  "api/services"
   "api/utils/errors"
+  "api/domain/locations"
   "net/http"
   "net/http/httptest"
   "encoding/json"
@@ -12,19 +14,28 @@ import(
   "github.com/gin-gonic/gin"
 )
 
+var (
+  getCountryFunc func(countryId string) (*locations.Country, *errors.ApiError)
+)
+
 func TestMain(m *testing.M) {
   rest.StartMockupServer()
   os.Exit(m.Run())
 }
 
+type locationsServiceMock struct {}
+
+func (* locationsServiceMock) GetCountry(countryId string) (*locations.Country, *errors.ApiError) {
+  return getCountryFunc(countryId)
+}
+
 func TestGetCountryNotFound(t *testing.T) {
-  rest.FlushMockups()
-  rest.AddMockups(&rest.Mock{
-    URL:            "https://api.mercadolibre.com/countries/AR",
-    HTTPMethod:     http.MethodGet,
-    RespHTTPCode:   http.StatusNotFound,
-    RespBody:       `{"message": "Country not found","error": "not_found","status": 404,"cause": []}`,
-  })
+  // Mock LocationsService
+  getCountryFunc = func(countryId string) (*locations.Country, *errors.ApiError) {
+    return nil, &errors.ApiError{Status: http.StatusNotFound, Message: "Country not found"}
+  }
+
+  services.LocationsService = &locationsServiceMock{}
 
   response := httptest.NewRecorder()
   c, _ := gin.CreateTestContext(response)
